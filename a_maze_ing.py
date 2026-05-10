@@ -36,7 +36,6 @@ def main() -> int:
 
     config_path = sys.argv[1]
 
-    # -- 1. Configuration ---------------------------------------------------
     try:
         config: MazeConfig = parse_config_file(config_path)
     except FileNotFoundError:
@@ -49,7 +48,6 @@ def main() -> int:
         print(f"Configuration error: {exc}", file=sys.stderr)
         return 1
 
-    # -- 2. Generate maze ---------------------------------------------------
     gen = MazeGenerator(
         width=config.width,
         height=config.height,
@@ -64,7 +62,6 @@ def main() -> int:
         print(f"Error generating maze: {exc}", file=sys.stderr)
         return 1
 
-    # -- 3. Solve -----------------------------------------------------------
     path = solve_maze(gen, config.entry, config.exit)
 
     if path is None:
@@ -74,7 +71,6 @@ def main() -> int:
         )
         return 1
 
-    # -- 4. Write output file -----------------------------------------------
     try:
         write_output(
             gen, config.entry, config.exit, path, config.output_file
@@ -84,7 +80,6 @@ def main() -> int:
         print(f"Error writing file: {exc}", file=sys.stderr)
         return 1
 
-    # -- 5. Interactive visualiser ------------------------------------------
     try:
         run_interactive(
             gen=gen,

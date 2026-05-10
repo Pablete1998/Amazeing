@@ -35,10 +35,6 @@ from enum import IntFlag
 from typing import Optional
 
 
-# ---------------------------------------------------------------------------
-# Direction constants
-# ---------------------------------------------------------------------------
-
 class Wall(IntFlag):
     """
     is the molde fot the dictionaries below
@@ -50,7 +46,6 @@ class Wall(IntFlag):
     WEST = 8
 
 
-# Tell us the opposite wall in the cell opened
 OPPOSITE: dict[Wall, Wall] = {
     Wall.NORTH: Wall.SOUTH,
     Wall.SOUTH: Wall.NORTH,
@@ -58,7 +53,6 @@ OPPOSITE: dict[Wall, Wall] = {
     Wall.WEST:  Wall.EAST,
 }
 
-# helps us to calculate the coordinates
 DIRECTION_DELTA: dict[Wall, tuple[int, int]] = {
     Wall.NORTH: (0, -1),
     Wall.SOUTH: (0,  1),
@@ -66,7 +60,6 @@ DIRECTION_DELTA: dict[Wall, tuple[int, int]] = {
     Wall.WEST:  (-1, 0),
 }
 
-# For the solver.py, writtes the path in maze.txt
 DIRECTION_LETTER: dict[Wall, str] = {
     Wall.NORTH: "N",
     Wall.EAST:  "E",
@@ -74,7 +67,6 @@ DIRECTION_LETTER: dict[Wall, str] = {
     Wall.WEST:  "W",
 }
 
-# the sum of all the walls, is the initial value of a cell just 15
 ALL_WALLS: int = Wall.NORTH | Wall.EAST | Wall.SOUTH | Wall.WEST
 
 
@@ -115,7 +107,6 @@ class Cell:
         return format(self.walls, "X")
 
 
-# 1 = blocked cell, 0 = free cell
 _PATTERN_42: list[list[int]] = [
     [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0],
     [1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0],
@@ -126,11 +117,9 @@ _PATTERN_42: list[list[int]] = [
     [0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0],
 ]
 
-# Define the heigh and the width of the patern 42
 _PAT_H: int = len(_PATTERN_42)
 _PAT_W: int = len(_PATTERN_42[0])
 
-# define the minimum size for the pattern to fit with a 2-cell margin
 _MIN_W_FOR_PATTERN: int = _PAT_W + 4
 _MIN_H_FOR_PATTERN: int = _PAT_H + 4
 
@@ -264,8 +253,6 @@ class MazeGenerator:
             self._add_extra_paths()
 
         self._generated = True
-
-    # used by generate()
 
     def _random_free_cell(self) -> tuple[int, int]:
         """Return (x, y) of a random non-blocked cell."""

@@ -36,7 +36,6 @@ def solve_maze(
     grid = gen.get_maze()
     w, h = gen.width, gen.height
 
-    # BFS queue: (current_position, accumulated_path)
     queue: deque[tuple[tuple[int, int], list[str]]] = deque()
     queue.append((entry, []))
     visited: set[tuple[int, int]] = {entry}
@@ -50,7 +49,6 @@ def solve_maze(
         cell: Cell = grid[cy][cx]
 
         for direction, (dx, dy) in DIRECTION_DELTA.items():
-            # Only move through OPEN walls
             if cell.has_wall(direction):
                 continue
 
@@ -67,7 +65,7 @@ def solve_maze(
                 visited.add(pos)
                 queue.append((pos, path + [DIRECTION_LETTER[direction]]))
 
-    return None  # No solution
+    return None  # if no solution
 
 
 def write_output(
@@ -83,14 +81,10 @@ def write_output(
     grid = gen.get_maze()
 
     with open(output_file, "w", encoding="utf-8") as f:
-        # Maze rows
         for row in grid:
             f.write("".join(cell.to_hex() for cell in row) + "\n")
 
-        # Separator
         f.write("\n")
-
-        # Metadata
         f.write(f"{entry[0]},{entry[1]}\n")
         f.write(f"{exit_coord[0]},{exit_coord[1]}\n")
         f.write("".join(path) + "\n")

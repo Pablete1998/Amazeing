@@ -28,10 +28,10 @@ COLOR_PRESETS: list[dict[str, str]] = [
     {"wall": "\033[35m", "floor": _BLK, "name": "Magenta/Black"},
 ]
 
-COLOR_ENTRY = "\033[95m"    # bright magenta -> entry
-COLOR_EXIT = "\033[91m"     # bright red     -> exit
-COLOR_PATH = "\033[96m"     # cyan           -> path
-COLOR_BLOCKED = "\033[93m"  # yellow         -> '42' pattern
+COLOR_ENTRY = "\033[95m"    # entry
+COLOR_EXIT = "\033[91m"     # exit
+COLOR_PATH = "\033[96m"     # path
+COLOR_BLOCKED = "\033[93m"  # 42 pattern
 
 WALL_CH = "\u2588\u2588"
 FLOOR_CH = "  "
