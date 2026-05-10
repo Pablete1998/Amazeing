@@ -1,0 +1,10 @@
+# A-Maze-ing configuration file
+
+WIDTH=20
+HEIGHT=15
+ENTRY=0,0
+EXIT=19,14
+# The maze is in hexadecimal format
+OUTPUT_FILE=maze.txt
+PERFECT=True
+SEED=42

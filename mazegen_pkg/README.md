@@ -1,0 +1,69 @@
+# mazegen
+
+Reusable maze generator using the **Recursive Backtracker (DFS)** algorithm.
+
+## Installation
+
+From the pre-built wheel:
+```bash
+pip install mazegen-1.0.0-py3-none-any.whl
+```
+
+From source:
+```bash
+cd mazegen_pkg
+pip install build
+python -m build
+pip install dist/mazegen-1.0.0-py3-none-any.whl
+```
+
+## Basic usage
+
+```python
+from mazegen import MazeGenerator, solve_maze, Wall
+
+# Create and generate a perfect 20x15 maze with a fixed seed
+gen = MazeGenerator(width=20, height=15, seed=42)
+gen.generate()                        # perfect=True by default
+
+# Access the structure
+maze = gen.get_maze()                 # list[list[Cell]]
+cell = gen.get_cell(0, 0)            # Cell at column 0, row 0
+print(cell.to_hex())                  # hex digit of its walls
+print(cell.has_wall(Wall.NORTH))      # True if north wall is closed
+
+# Get the solution (BFS)
+path = solve_maze(gen, (0, 0), (19, 14))
+print("".join(path))                  # e.g. "SSEENE..."
+```
+
+## Custom parameters
+
+```python
+gen = MazeGenerator(
+    width=30,
+    height=20,
+    seed=1234,       # None = different every time
+    entry=(0, 0),
+    exit=(29, 19),
+)
+gen.generate(perfect=False)   # adds extra passages
+```
+
+## Re-generating
+
+```python
+gen.reset()        # clears the grid, continues the RNG
+gen.generate()     # new different maze
+```
+
+## Exported symbols
+
+| Symbol            | Description                                       |
+|-------------------|---------------------------------------------------|
+| `MazeGenerator`   | Main generation class                             |
+| `Cell`            | Individual cell with wall flags and helpers       |
+| `Wall`            | IntFlag: NORTH / EAST / SOUTH / WEST              |
+| `solve_maze`      | BFS solver -> list of N/E/S/W letters, or None    |
+| `DIRECTION_DELTA` | Dict Wall -> (dx, dy)                             |
+| `DIRECTION_LETTER`| Dict Wall -> output-file letter                   |
